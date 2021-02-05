@@ -59,3 +59,5 @@
 "Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.o"
 "Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.o"
 "Position/Src/compass.o"
+"Position/Src/position.o"
+"Position/Src/position_motion_sensor.o"

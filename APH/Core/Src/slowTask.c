@@ -16,6 +16,7 @@
 #include "app_mems.h"
 //#include "stm32f4xx_nucleo.h"
 #include "compass.h"
+#include "position.h"
 
 /* USER CODE END Includes */
 
@@ -63,11 +64,12 @@ void StartSlowTask(void *argument)
 	  blink++;
 	  if(cnt >= 10)
 	  {
-		  printf("\n\n\n\rHallo\n\n\r");
-		  cnt= 0;
 		  Set_Output(OUT_TEST_4, 1);
+//		  printf("\n\n\n\rHallo\n\n\r");
+		  cnt= 0;
 		  SetCompassData();
-		  MX_MEMS_Process();
+		  PositionProcess();
+//		  MX_MEMS_Process();
 		  Set_Output(OUT_TEST_4, 0);
 	  }
 

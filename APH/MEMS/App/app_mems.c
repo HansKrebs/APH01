@@ -210,7 +210,6 @@ void MX_IKS01A3_DataLogTerminal_Process(void)
 
   for(i = 0; i < IKS01A3_MOTION_INSTANCES_NBR; i++)
   {
-
     if(MotionCapabilities[i].Acc)
     {
       Accelero_Sensor_Handler(i);
@@ -289,7 +288,6 @@ static void Accelero_Sensor_Handler(uint32_t Instance)
   {
     snprintf(dataOut, MAX_BUF_SIZE, "\r\nACC_X[%d]: %d, ACC_Y[%d]: %d, ACC_Z[%d]: %d\r\n", (int)Instance,
              (int)acceleration.x, (int)Instance, (int)acceleration.y, (int)Instance, (int)acceleration.z);
-whoami = 0;
   }
 
   printf("%s", dataOut);

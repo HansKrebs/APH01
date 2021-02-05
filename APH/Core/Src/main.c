@@ -27,6 +27,7 @@
 #include "fastTask.h"
 #include "normalTask.h"
 #include "slowTask.h"
+#include "position.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -154,8 +155,9 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_MEMS_Init();
+//  MX_MEMS_Init();
   /* USER CODE BEGIN 2 */
+  position_Init();
 
   /* USER CODE END 2 */
 
