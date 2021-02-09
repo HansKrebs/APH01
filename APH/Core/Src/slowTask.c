@@ -62,15 +62,18 @@ void StartSlowTask(void *argument)
 	  //Set_Output(OUT_TEST_4,blink & 1);
 	  cnt++;
 	  blink++;
+	  Set_Output(OUT_TEST_4, 1);
+	  PositionProcess();
+	  Set_Output(OUT_TEST_4, 0);
 	  if(cnt >= 10)
 	  {
-		  Set_Output(OUT_TEST_4, 1);
-//		  printf("\n\n\n\rHallo\n\n\r");
+//		  Set_Output(OUT_TEST_4, 1);
+////		  printf("\n\n\n\rHallo\n\n\r");
 		  cnt= 0;
-		  SetCompassData();
-		  PositionProcess();
-//		  MX_MEMS_Process();
-		  Set_Output(OUT_TEST_4, 0);
+//		  SetCompassData();
+//		  PositionProcess();
+////		  MX_MEMS_Process();
+//		  Set_Output(OUT_TEST_4, 0);
 	  }
 
 

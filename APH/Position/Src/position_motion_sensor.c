@@ -10,12 +10,14 @@
 #include "position_conf.h"
 #include "lis2dw12.h"
 #include "lis2mdl.h"
+#include "lsm6dso.h"
 
 /** @defgroup POS_MOTION_SENSOR_Private_Function_Prototypes IKS01A3 MOTION SENSOR Private Function Prototypes
  * @{
  */
 static int32_t LIS2DW12_0_Probe(POS_MOTION_SENSORS sensor);
 static int32_t LIS2MDL_0_Probe(POS_MOTION_SENSORS sensor);
+static int32_t LSM6DSO_0_Probe(POS_MOTION_SENSORS sensor);
 
 /**
  * @}
@@ -46,21 +48,19 @@ static MOTION_SENSOR_CommonDrv_t *PosMotionDrv[POS_MOTION_SENSORS_MAX];
  * @brief  Initializes the motion sensors
  * @retval BSP status
  */
+#include "position.h"
 int32_t POS_MOTION_SENSOR_Init(void)
 {
   int32_t ret = BSP_ERROR_NONE;
 
   ret = LIS2DW12_0_Probe(ACC_LIS2DW12);
   ret = LIS2MDL_0_Probe(MAG_LIS2MDL);
+  ret = LSM6DSO_0_Probe(GYR_LSM6DSO);
 
 // nur test a
   uint8_t Id1,Id2;
   ret = POS_MOTION_SENSOR_ReadID(ACC_LIS2DW12, &Id1);
   ret = POS_MOTION_SENSOR_ReadID(MAG_LIS2MDL, &Id2);
-
-
-  ret = POS_MOTION_SENSOR_Enable(ACC_LIS2DW12);
-  ret = POS_MOTION_SENSOR_Enable(MAG_LIS2MDL);
 
 // nur test e
 
@@ -377,6 +377,74 @@ int32_t POS_MOTION_SENSOR_SetFullScale(POS_MOTION_SENSORS sensor, int32_t Fullsc
 /** @defgroup POS_MOTION_SENSOR_Private_Functions IKS01A3 MOTION SENSOR Private Functions
  * @{
  */
+/**
+ * @brief  Register Bus IOs for instance 0 if component ID is OK
+ * @retval BSP status
+ */
+static int32_t LSM6DSO_0_Probe(POS_MOTION_SENSORS sensor)
+{
+  LSM6DSO_IO_t            io_ctx;
+  uint8_t                 id;
+  static LSM6DSO_Object_t lsm6dso_obj_0;
+  LSM6DSO_Capabilities_t  cap;
+  int32_t ret = BSP_ERROR_NONE;
+
+  /* Configure the accelero driver */
+  io_ctx.BusType     = LSM6DSO_I2C_BUS; /* I2C */
+  io_ctx.Address     = LSM6DSO_I2C_ADD_H;
+  io_ctx.Init        = POS_I2C_Init;
+  io_ctx.DeInit      = POS_I2C_DeInit;
+  io_ctx.ReadReg     = POS_I2C_ReadReg;
+  io_ctx.WriteReg    = POS_I2C_WriteReg;
+  io_ctx.GetTick     = POS_GetTick;
+
+  if (LSM6DSO_RegisterBusIO(&lsm6dso_obj_0, &io_ctx) != LSM6DSO_OK)
+  {
+    ret = BSP_ERROR_UNKNOWN_COMPONENT;
+  }
+  else if (LSM6DSO_ReadID(&lsm6dso_obj_0, &id) != LSM6DSO_OK)
+  {
+    ret = BSP_ERROR_UNKNOWN_COMPONENT;
+  }
+  else if (id != LSM6DSO_ID)
+  {
+    ret = BSP_ERROR_UNKNOWN_COMPONENT;
+  }
+  else
+  {
+	PosMotionCompObj[ACC_LSM6DSO] = &lsm6dso_obj_0;
+	PosMotionCompObj[GYR_LSM6DSO] = &lsm6dso_obj_0;
+	/* The second cast (void *) is added to bypass Misra R11.3 rule */
+	PosMotionDrv[ACC_LSM6DSO] = (MOTION_SENSOR_CommonDrv_t *)(void *)&LSM6DSO_COMMON_Driver;
+	PosMotionDrv[GYR_LSM6DSO] = (MOTION_SENSOR_CommonDrv_t *)(void *)&LSM6DSO_COMMON_Driver;
+
+	/* The second cast (void *) is added to bypass Misra R11.3 rule */
+	PosMotionFuncDrv[ACC_LSM6DSO] = (MOTION_SENSOR_FuncDrv_t *)(void *)&LSM6DSO_ACC_Driver;
+	PosMotionFuncDrv[GYR_LSM6DSO] = (MOTION_SENSOR_FuncDrv_t *)(void *)&LSM6DSO_GYRO_Driver;
+
+	if (PosMotionDrv[ACC_LSM6DSO]->Init(PosMotionCompObj[ACC_LSM6DSO]) != LSM6DSO_OK)
+	{
+		ret = BSP_ERROR_COMPONENT_FAILURE;
+	}
+	else if (PosMotionDrv[GYR_LSM6DSO]->Init(PosMotionCompObj[GYR_LSM6DSO]) != LSM6DSO_OK)
+	{
+		ret = BSP_ERROR_COMPONENT_FAILURE;
+	}
+	else
+	{
+		ret = BSP_ERROR_NONE;
+		if (PosMotionFuncDrv[ACC_LSM6DSO]->Enable(PosMotionCompObj[ACC_LSM6DSO]) != LSM6DSO_OK)
+		{
+			ret = BSP_ERROR_COMPONENT_FAILURE;
+		}
+		else if (PosMotionFuncDrv[GYR_LSM6DSO]->Enable(PosMotionCompObj[GYR_LSM6DSO]) != LSM6DSO_OK)
+		{
+			ret = BSP_ERROR_COMPONENT_FAILURE;
+		}
+	}
+  }
+	  return ret;
+}
 
 /**
  * @brief  Register Bus IOs for instance 1 if component ID is OK
@@ -421,11 +489,15 @@ static int32_t LIS2DW12_0_Probe(POS_MOTION_SENSORS sensor)
 
 	if (PosMotionDrv[ACC_LIS2DW12]->Init(PosMotionCompObj[ACC_LIS2DW12]) != LIS2DW12_OK)
 	{
-	ret = BSP_ERROR_COMPONENT_FAILURE;
+		ret = BSP_ERROR_COMPONENT_FAILURE;
 	}
 	else
 	{
-	ret = BSP_ERROR_NONE;
+		ret = BSP_ERROR_NONE;
+		if (PosMotionFuncDrv[ACC_LIS2DW12]->Enable(PosMotionCompObj[ACC_LIS2DW12]) != LSM6DSO_OK)
+		{
+			ret = BSP_ERROR_COMPONENT_FAILURE;
+		}
 	}
   }
   return ret;
@@ -478,10 +550,14 @@ static int32_t LIS2MDL_0_Probe(POS_MOTION_SENSORS sensor)
     {
       ret = BSP_ERROR_COMPONENT_FAILURE;
     }
-    else
-    {
-      ret = BSP_ERROR_NONE;
-    }
+	else
+	{
+		ret = BSP_ERROR_NONE;
+		if (PosMotionFuncDrv[MAG_LIS2MDL]->Enable(PosMotionCompObj[MAG_LIS2MDL]) != LSM6DSO_OK)
+		{
+			ret = BSP_ERROR_COMPONENT_FAILURE;
+		}
+	}
   }
   return ret;
 }

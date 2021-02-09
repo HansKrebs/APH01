@@ -8,6 +8,8 @@
 #include "stm32f4xx_nucleo.h"
 #include "lis2dw12.h"
 #include "stdio.h"
+#include "position_motion_sensor.h"
+//#include "position_conf.h"
 
 static LIS2DW12_Object_t accObj;
 static LIS2DW12_Capabilities_t	accCap;
@@ -20,12 +22,32 @@ static void motionSensor_Init(void);
 void position_Init(void)
 {
 	motionSensor_Init();
+
+
+
+
+
+
+	/////
+//	POS_MOTION_SENSOR_Axes_t AccAxesLsm6dso;
+//	POS_MOTION_SENSOR_GetAxes(ACC_LSM6DSO, &AccAxesLsm6dso);
 }
 
 void PositionProcess(void)
 {
-	printf("\n\n\n\rHallo PositionProcess\n\n\r");
+	POS_MOTION_SENSOR_Axes_t AccAxesLis2dw={0,0,0};
+	POS_MOTION_SENSOR_Axes_t AccAxesLsm6dso={0,0,0};
+	POS_MOTION_SENSOR_Axes_t GyrAxesLsm6dso={0,0,0};
+	POS_MOTION_SENSOR_Axes_t MagAxes={0,0,0};
+	POS_MOTION_SENSOR_GetAxes(ACC_LIS2DW12, &AccAxesLis2dw);
+	POS_MOTION_SENSOR_GetAxes(MAG_LIS2MDL, &MagAxes);
+	POS_MOTION_SENSOR_GetAxes(ACC_LSM6DSO, &AccAxesLsm6dso);
+	POS_MOTION_SENSOR_GetAxes(GYR_LSM6DSO, &GyrAxesLsm6dso);
+
+	printf("\n\rACC x = %5d y = %5d z = %5d MAG x = %5d y = %5d z = %5d",(int)AccAxesLis2dw.x,(int)AccAxesLis2dw.y,(int)AccAxesLis2dw.z,(int)MagAxes.x,(int)MagAxes.y,(int)MagAxes.z);
+	printf("\n\rACC x = %5d y = %5d z = %5d GYR x = %5d y = %5d z = %5d\n\r",(int)AccAxesLsm6dso.x,(int)AccAxesLsm6dso.y,(int)AccAxesLsm6dso.z,(int)GyrAxesLsm6dso.x,(int)GyrAxesLsm6dso.y,(int)GyrAxesLsm6dso.z);
 }
+
 /**
   * @brief  Initialize the accelerometer and  magnetometer
   * @retval None

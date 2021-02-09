@@ -33,8 +33,10 @@ typedef struct
 
 typedef enum
 {
-  ACC_LIS2DW12 = 0,
+  ACC_LSM6DSO = 0,
+  GYR_LSM6DSO,
   MAG_LIS2MDL,
+  ACC_LIS2DW12,
   POS_MOTION_SENSORS_MAX
 } POS_MOTION_SENSORS;
 
