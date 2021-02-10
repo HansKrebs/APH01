@@ -10,9 +10,9 @@
 
 #include <stdint.h>
 
-void initCompass(uint32_t cInit);
+void compass_init(void);
 
-void SetCompassData();
+void GetCompassData();
 
 
 

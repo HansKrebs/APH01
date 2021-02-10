@@ -42,7 +42,6 @@ void StartSlowTask(void *argument)
 	  osDelay(1);
 	}
 
-	initCompass(57); //TODO
 
 
 

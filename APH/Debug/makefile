@@ -62,7 +62,7 @@ all: APH.elf secondary-outputs
 
 # Tool invocations
 APH.elf: $(OBJS) $(USER_OBJS) C:\Users\Hans\Documents\GitHub\APH01\APH\STM32F401RETX_FLASH.ld
-	arm-none-eabi-gcc -o "APH.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\Hans\Documents\GitHub\APH01\APH\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="APH.map" -Wl,--gc-sections -static -L../Middlewares/ST/STM32_MotionEC_Library/Lib --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+	arm-none-eabi-gcc -o "APH.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\Hans\Documents\GitHub\APH01\APH\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="APH.map" -Wl,--gc-sections -static -L../Middlewares/ST/STM32_MotionEC_Library/Lib -L../Middlewares/ST/STM32_MotionAC_Library/Lib -L../Middlewares/ST/STM32_MotionGC_Library/Lib -L../Middlewares/ST/STM32_MotionMC_Library/Lib -L../Middlewares/ST/STM32_MotionFX_Library/Lib --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

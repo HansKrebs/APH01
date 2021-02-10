@@ -65,6 +65,8 @@
             <include>Middlewares\Third_Party\FreeRTOS\Source\portable\GCC\ARM_CM4F</include>
             <include>Drivers\CMSIS\Device\ST\STM32F4xx\Include</include>
             <include>Drivers\CMSIS\Include</include>
+            <include>Middlewares\ST\STM32_MotionAC_Library\Inc</include>
+            <include>Middlewares\ST\STM32_MotionGC_Library\Inc</include>
             <include>Drivers\BSP\Components\lsm6dso</include>
             <include>Drivers\BSP\Components\lis2dw12</include>
             <include>Drivers\BSP\Components\lis2mdl</include>
@@ -74,6 +76,8 @@
             <include>Drivers\BSP\IKS01A3</include>
             <include>Drivers\BSP\Components\Common</include>
             <include>Middlewares\ST\STM32_MotionEC_Library\Inc</include>
+            <include>Middlewares\ST\STM32_MotionMC_Library\Inc</include>
+            <include>Middlewares\ST\STM32_MotionFX_Library\Inc</include>
           </Cincludes>
           <definestoremove>
             <Adefines />
@@ -112,11 +116,47 @@
       </sourceEntries>
       <Groups>
         <group>
+          <name>STM32_MotionAC_Library</name>
+          <group>
+            <name>Sensors/STM32_MotionAC_Library/Core</name>
+            <file>
+              <name>Middlewares/ST/STM32_MotionAC_Library/Lib/MotionAC_CM4F_wc32_ot_hard.a</name>
+            </file>
+          </group>
+        </group>
+        <group>
+          <name>STM32_MotionGC_Library</name>
+          <group>
+            <name>Sensors/STM32_MotionGC_Library/Core</name>
+            <file>
+              <name>Middlewares/ST/STM32_MotionGC_Library/Lib/MotionGC_CM4F_wc32_ot_hard.a</name>
+            </file>
+          </group>
+        </group>
+        <group>
           <name>STM32_MotionEC_Library</name>
           <group>
             <name>Sensors/STM32_MotionEC_Library/Core</name>
             <file>
               <name>Middlewares/ST/STM32_MotionEC_Library/Lib/MotionEC_CM4F_wc32_ot_hard.a</name>
+            </file>
+          </group>
+        </group>
+        <group>
+          <name>STM32_MotionMC_Library</name>
+          <group>
+            <name>Sensors/STM32_MotionMC_Library/Core</name>
+            <file>
+              <name>Middlewares/ST/STM32_MotionMC_Library/Lib/MotionMC_CM4F_wc32_ot_hard.a</name>
+            </file>
+          </group>
+        </group>
+        <group>
+          <name>STM32_MotionFX_Library</name>
+          <group>
+            <name>Sensors/STM32_MotionFX_Library/Core</name>
+            <file>
+              <name>Middlewares/ST/STM32_MotionFX_Library/Lib/MotionFX_CM4F_wc32_ot_hard.a</name>
             </file>
           </group>
         </group>

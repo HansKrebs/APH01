@@ -159,7 +159,7 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_CRC_Init();
-//  MX_MEMS_Init();
+ // MX_MEMS_Init();
   /* USER CODE BEGIN 2 */
   position_Init();
 
