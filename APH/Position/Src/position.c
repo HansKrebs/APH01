@@ -92,7 +92,7 @@ static void motionSensor_Init(void)
 
 
 //	LIS2DW12_Init(&accObj);
-	LIS2DW12_GetCapabilities(&accObj, &accCap);
+//	LIS2DW12_GetCapabilities(&accObj, &accCap);
 
 /*
   IKS01A3_MOTION_SENSOR_Init(IKS01A3_LIS2DW12_0, MOTION_ACCELERO);

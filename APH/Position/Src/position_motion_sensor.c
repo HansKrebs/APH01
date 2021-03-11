@@ -54,16 +54,15 @@ int32_t POS_MOTION_SENSOR_Init(void)
   int32_t ret = BSP_ERROR_NONE;
 
   ret = LIS2DW12_0_Probe(ACC_LIS2DW12);
-  ret = LIS2MDL_0_Probe(MAG_LIS2MDL);
-  ret = LSM6DSO_0_Probe(GYR_LSM6DSO);
+  if (BSP_ERROR_NONE == ret)
+  {
+	  ret = LIS2MDL_0_Probe(MAG_LIS2MDL);
+  }
 
-// nur test a
-  uint8_t Id1,Id2;
-  ret = POS_MOTION_SENSOR_ReadID(ACC_LIS2DW12, &Id1);
-  ret = POS_MOTION_SENSOR_ReadID(MAG_LIS2MDL, &Id2);
-
-// nur test e
-
+  if (BSP_ERROR_NONE == ret)
+  {
+	  ret = LSM6DSO_0_Probe(GYR_LSM6DSO);
+  }
   return ret;
 }
 
@@ -386,7 +385,6 @@ static int32_t LSM6DSO_0_Probe(POS_MOTION_SENSORS sensor)
   LSM6DSO_IO_t            io_ctx;
   uint8_t                 id;
   static LSM6DSO_Object_t lsm6dso_obj_0;
-  LSM6DSO_Capabilities_t  cap;
   int32_t ret = BSP_ERROR_NONE;
 
   /* Configure the accelero driver */
