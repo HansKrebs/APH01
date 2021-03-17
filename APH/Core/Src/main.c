@@ -53,8 +53,8 @@ CRC_HandleTypeDef hcrc;
 osThreadId_t defaultTaskHandle;
 const osThreadAttr_t defaultTask_attributes = {
   .name = "defaultTask",
+  .stack_size = 128 * 4,
   .priority = (osPriority_t) osPriorityNormal,
-  .stack_size = 128 * 4
 };
 /* Definitions for fastTask */
 osThreadId_t fastTaskHandle;
@@ -62,10 +62,10 @@ uint32_t fastTaskBuffer[ 512 ];
 osStaticThreadDef_t fastTaskControlBlock;
 const osThreadAttr_t fastTask_attributes = {
   .name = "fastTask",
-  .stack_mem = &fastTaskBuffer[0],
-  .stack_size = sizeof(fastTaskBuffer),
   .cb_mem = &fastTaskControlBlock,
   .cb_size = sizeof(fastTaskControlBlock),
+  .stack_mem = &fastTaskBuffer[0],
+  .stack_size = sizeof(fastTaskBuffer),
   .priority = (osPriority_t) osPriorityRealtime,
 };
 /* Definitions for normalTask */
@@ -74,10 +74,10 @@ uint32_t normalTaskBuffer[ 1024 ];
 osStaticThreadDef_t normalTaskControlBlock;
 const osThreadAttr_t normalTask_attributes = {
   .name = "normalTask",
-  .stack_mem = &normalTaskBuffer[0],
-  .stack_size = sizeof(normalTaskBuffer),
   .cb_mem = &normalTaskControlBlock,
   .cb_size = sizeof(normalTaskControlBlock),
+  .stack_mem = &normalTaskBuffer[0],
+  .stack_size = sizeof(normalTaskBuffer),
   .priority = (osPriority_t) osPriorityNormal,
 };
 /* Definitions for slowTask */
@@ -86,10 +86,10 @@ uint32_t slowTaskBuffer[ 1024 ];
 osStaticThreadDef_t slowTaskControlBlock;
 const osThreadAttr_t slowTask_attributes = {
   .name = "slowTask",
-  .stack_mem = &slowTaskBuffer[0],
-  .stack_size = sizeof(slowTaskBuffer),
   .cb_mem = &slowTaskControlBlock,
   .cb_size = sizeof(slowTaskControlBlock),
+  .stack_mem = &slowTaskBuffer[0],
+  .stack_size = sizeof(slowTaskBuffer),
   .priority = (osPriority_t) osPriorityLow4,
 };
 /* Definitions for normTaskEvent */

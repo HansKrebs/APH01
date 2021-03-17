@@ -286,7 +286,7 @@ int32_t BSP_PB_DeInit(Button_TypeDef Button)
 
 /**
  * @brief  Returns the selected button state.
- * @param  Button Button to be adressed
+ * @param  Button Button to be addressed
  *                This parameter can be one of the following values:
  *                @arg  BUTTON_USER
  * @retval The Button GPIO pin value (GPIO_PIN_RESET = button pressed)
