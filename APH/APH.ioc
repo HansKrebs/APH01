@@ -209,7 +209,7 @@ STMicroelectronics.X-CUBE-MEMS1.8.2.0.STM32IiMotionGCIiLibraryCcSensorsJjSTM32Ii
 RCC.APB2Freq_Value=84000000
 NVIC.SavedSystickIrqHandlerGenerated=true
 STMicroelectronics.X-CUBE-MEMS1.8.2.00.BSP.api=BSP_COMMON_DRIVER
-MxCube.Version=6.1.0
+MxCube.Version=6.1.2
 STMicroelectronics.X-CUBE-MEMS1.8.2.01.BSP.i2creg=
 NVIC.NonMaskableInt_IRQn=true\:0\:0\:false\:false\:true\:false\:true\:false
 PA13.Mode=Serial_Wire
